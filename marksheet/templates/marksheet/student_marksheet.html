@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ student.first_name }} {{ student.last_name }}'s Marksheet</title>
+    <link rel="stylesheet" href="{% static 'marksheet/css/styles.css' %}">
+    <style>
+        .logo {
+            width: 100px; /* Adjust size as needed */
+            height: auto;
+            display: block;
+            margin: 0 auto; /* Center the logo */
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .stamp-signature {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+        .stamp {
+            width: 300px;
+        }
+        .signature {
+            font-style: italic;
+            font-size: 1.2em;
+            text-align: right;
+        }
+        .signature p {
+            margin: 0;
+        }
+        .stamp-container, .signature-container {
+            flex: 1;
+        }
+        .instructions {
+            margin-top: 20px;
+            font-size: 1em;
+            color: #333;
+        }
+        .instructions ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .actions a, .actions button {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 15px;
+            font-size: 1em;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .actions button:hover, .actions a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <!-- Logo -->
+        <img src="{% static 'marksheet/images/college_logo.png' %}" alt="College Logo" class="logo">
+        <h1>Entrance Examination Results</h1>
+    </header>
+
+    <main>
+        <h2>{{ student.first_name }} {{ student.last_name }} | Roll Number: {{ student.roll_number }}</h2>
+        <h3>Class: {{ student.class_name }}</h3>
+        <h3>Total Marks: {{ total_marks }} / {{ max_marks }}</h3>
+        <h3>Percentage: {{ percentage|floatformat:2 }}%</h3>
+        <h3>Grade: {{ overall_grade }}</h3>
+        <h3>Rank: {{ student_rank }}</h3>
+
+        <h4>Marks in Subjects:</h4>
+        <table border="1" cellspacing="0" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Marks Obtained</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mark in marks_with_grades %}
+                    <tr>
+                        <td>{{ mark.subject }}</td>
+                        <td>{{ mark.marks_obtained }}</td>
+                        <td>{{ mark.grade }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">No marks available for this student.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="instructions">
+            <h4>Important Notes:</h4>
+            <ul>
+                <li>Maximum Marks of each subject  is 100 all the obtained marks mentioned here is out of 100</li>
+                <li>A minimum of 40% marks in each subject is required to pass.</li>
+                <li>Students with an overall percentage above 50% will be granted admission to applied class.</li>
+                <li>For printing or saving all the details use Ctrl+P.</li>
+            </ul>
+        </div>
+
+        <div class="stamp-signature">
+            <div class="stamp-container">
+                <img src="{% static 'marksheet/images/stamp.png' %}" alt="College Stamp" class="stamp">
+            </div>
+            <div class="signature-container">
+                <div class="signature">
+                    <p>Authorized Signature</p>
+                    <p>Principal, Hindu Vedic College, Gorakhpur, UP</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <!-- Button to download marksheet as PDF -->
+            <a href="{% url 'marksheet:download_pdf' student.id %}" target="_blank">Download PDF</a>
+
+            <!-- Button to share marksheet -->
+            <a href="mailto:?subject=Marksheet of {{ student.first_name }}&body=Please find attached the marksheet." target="_blank">Share Marksheet</a>
+
+            <!-- Button to navigate back to home -->
+            <a href="{% url 'marksheet:homepage' %}">Go to Homepage</a>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2024 College Entrance Examination Management System</p>
+        </footer>
+    </main>
+</body>
+</html>

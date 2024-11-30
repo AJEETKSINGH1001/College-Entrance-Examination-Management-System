@@ -1,0 +1,50 @@
+<!-- marksheet/templates/marksheet/class_students.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ class_obj.name }} - Students</title>
+    <link rel="stylesheet" href="{% static 'marksheet/css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Students in Class {{ class_obj.name }} - Section {{ class_obj.section }}</h1>
+    </header>
+    <a href="{% url 'marksheet:homepage' %}" class="button">Back to Home</a>
+
+    <main>
+        <ul>
+            {% for student in students %}
+                <li><a href="{% url 'marksheet:student_marksheet' student.id %}">{{ student.first_name }} {{ student.last_name }} (Roll No: {{ student.roll_number }})</a></li>
+            {% empty %}
+                <li>No students in this class.</li>
+            {% endfor %}
+        </ul>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 School Marksheet Management System</p>
+    </footer>
+</body>
+<style>
+    /* Button styling */
+.button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+</style>
+</html>

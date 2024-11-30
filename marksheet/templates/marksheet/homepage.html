@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - College Entrance Examination Management System</title>
+    <link rel="stylesheet" href="{% static 'marksheet/css/styles.css' %}">
+    <style>
+        .logo {
+            width: 100px; /* Adjust size as needed */
+            height: auto;
+            display: block;
+            margin: 0 auto; /* Center the logo */
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Logo -->
+        <img src="{% static 'marksheet/images/college_logo.png' %}" alt="College Logo" class="logo">
+        <h1>Welcome to College Entrance Examination Management System</h1>
+    </header>
+
+    <main>
+        <h2>Enter Roll Number and Class to view Results</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 College Entrance Examination Management System</p>
+    </footer>
+</body>
+</html>
