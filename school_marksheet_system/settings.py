@@ -42,7 +42,11 @@ SECRET_KEY = 'django-insecure-s5un!_pgx1ee6qn5=bx+m99tlv1wqfibppb#aqi*6lyk(=xu)9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'college-entrance-examination-management.onrender.com',
+    '127.0.0.1',  # Optional: for local development
+    'localhost',  # Optional: for local development
+]
 
 
 # Application definition
